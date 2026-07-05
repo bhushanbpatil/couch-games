@@ -1,38 +1,51 @@
 //
-//  SetupView.swift
+//  MafiaSetupView.swift
 //  Couch Games
 //
 
 import SwiftUI
 
-struct SetupView: View {
+struct MafiaSetupView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel = TimerGuessViewModel()
-    @State private var playerCount = 2
-    @State private var roundCount = 3
-    @State private var playerNames: [String] = ["Player 1", "Player 2"]
+    @State private var viewModel = MafiaGameViewModel()
+    @State private var totalPlayers = 6
+    @State private var mafiaCount = 2
+    @State private var policeCount = 1
+    @State private var nurseCount = 1
+    @State private var playerNames: [String] = (1...6).map { "Player \($0)" }
     @State private var navigateToGame = false
-    @State private var showLeaderboard = false
     @State private var showRules = false
+
+    private var config: MafiaSetupConfig {
+        MafiaSetupConfig(
+            totalPlayers: totalPlayers,
+            mafiaCount: mafiaCount,
+            policeCount: policeCount,
+            nurseCount: nurseCount,
+            playerNames: playerNames
+        )
+    }
 
     var body: some View {
         ZStack {
-            GameScreenBackground()
+            CouchTheme.mafiaGradient
+                .ignoresSafeArea()
 
             ScrollView {
                 VStack(spacing: 20) {
-                    SetupSection(title: "Players", icon: "person.3.fill") {
-                        ThemedStepper(
-                            label: "Number of players",
-                            value: $playerCount,
-                            range: GameConfig.minPlayers...GameConfig.maxPlayers
+                    MafiaSetupSection(title: "Players", icon: "person.3.fill") {
+                        MafiaStepper(
+                            label: "Total players",
+                            value: $totalPlayers,
+                            range: MafiaSetupConfig.minPlayers...MafiaSetupConfig.maxPlayers
                         )
-                        .onChange(of: playerCount) { _, newValue in
+                        .onChange(of: totalPlayers) { _, newValue in
                             syncPlayerNames(count: newValue)
+                            clampRoles()
                         }
 
                         ForEach(playerNames.indices, id: \.self) { index in
-                            ThemedTextField(
+                            MafiaTextField(
                                 placeholder: "Player \(index + 1)",
                                 text: $playerNames[index],
                                 icon: "person.fill"
@@ -40,31 +53,51 @@ struct SetupView: View {
                         }
                     }
 
-                    SetupSection(title: "Rounds", icon: "arrow.triangle.2.circlepath") {
-                        ThemedStepper(
-                            label: "Rounds to play",
-                            value: $roundCount,
-                            range: GameConfig.minRounds...GameConfig.maxRounds
-                        )
+                    MafiaSetupSection(title: "Roles", icon: "theatermasks.fill") {
+                        MafiaStepper(label: "Mafia", value: $mafiaCount, range: 1...maxMafia)
+                            .onChange(of: mafiaCount) { _, _ in clampRoles() }
+                        MafiaStepper(label: "Police", value: $policeCount, range: 0...maxSpecialRoles)
+                            .onChange(of: policeCount) { _, _ in clampRoles() }
+                        MafiaStepper(label: "Nurse", value: $nurseCount, range: 0...maxSpecialRoles)
+                            .onChange(of: nurseCount) { _, _ in clampRoles() }
+
+                        HStack {
+                            Text("Villagers")
+                                .font(.subheadline)
+                                .foregroundStyle(.white.opacity(0.65))
+                            Spacer()
+                            Text("\(config.villagerCount)")
+                                .font(.title3.bold())
+                                .foregroundStyle(CouchTheme.gold)
+                        }
+                        .padding(.top, 4)
                     }
 
-                    Text("Same target time for everyone each round. Closest stop wins — a perfect stop earns 200 points.")
-                        .font(.footnote)
-                        .foregroundStyle(.white.opacity(0.55))
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 8)
+                    if let error = config.validationError {
+                        Text(error)
+                            .font(.footnote.weight(.semibold))
+                            .foregroundStyle(Color.red.opacity(0.9))
+                            .multilineTextAlignment(.center)
+                    } else {
+                        Text("Pass the phone so each player sees their role privately. One person moderates.")
+                            .font(.footnote)
+                            .foregroundStyle(.white.opacity(0.55))
+                            .multilineTextAlignment(.center)
+                    }
 
                     Button("Start Game") {
                         startGame()
                     }
-                    .buttonStyle(CouchPrimaryButton())
+                    .buttonStyle(CouchPrimaryButton(gradient: CouchTheme.mafiaAccentGradient))
+                    .disabled(config.validationError != nil)
+                    .opacity(config.validationError == nil ? 1 : 0.5)
                     .padding(.top, 4)
                 }
                 .padding(20)
             }
         }
         .foregroundStyle(.white)
-        .navigationTitle("Timer Guess")
+        .navigationTitle("Mafia")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {
@@ -72,29 +105,26 @@ struct SetupView: View {
                 Button("Rules") { showRules = true }
                     .fontWeight(.semibold)
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Leaderboard") {
-                    showLeaderboard = true
-                }
-                .fontWeight(.semibold)
-            }
         }
         .navigationDestination(isPresented: $navigateToGame) {
-            GameplayView(viewModel: viewModel) {
+            MafiaGameView(viewModel: viewModel) {
                 navigateToGame = false
                 dismiss()
             }
         }
-        .sheet(isPresented: $showLeaderboard) {
-            NavigationStack {
-                LeaderboardView(players: viewModel.leaderboard, turnHistory: viewModel.turnHistory)
-            }
-        }
         .sheet(isPresented: $showRules) {
             NavigationStack {
-                GameRulebookView(books: [.timerGuess])
+                GameRulebookView(books: [.mafia])
             }
         }
+    }
+
+    private var maxMafia: Int {
+        max(1, totalPlayers - policeCount - nurseCount - 1)
+    }
+
+    private var maxSpecialRoles: Int {
+        max(0, totalPlayers - mafiaCount - 1)
     }
 
     private func syncPlayerNames(count: Int) {
@@ -107,17 +137,24 @@ struct SetupView: View {
         }
     }
 
-    private func startGame() {
-        let players = playerNames.enumerated().map { index, name in
-            Player(name: name.isEmpty ? "Player \(index + 1)" : name)
+    private func clampRoles() {
+        mafiaCount = min(mafiaCount, maxMafia)
+        let specialCap = maxSpecialRoles
+        policeCount = min(policeCount, specialCap)
+        nurseCount = min(nurseCount, specialCap)
+        if policeCount + nurseCount > totalPlayers - mafiaCount - 1 {
+            nurseCount = max(0, totalPlayers - mafiaCount - policeCount - 1)
         }
-        let config = GameConfig(roundCount: roundCount, players: players)
+    }
+
+    private func startGame() {
+        guard config.validationError == nil else { return }
         viewModel.startGame(config: config)
         navigateToGame = true
     }
 }
 
-private struct SetupSection<Content: View>: View {
+private struct MafiaSetupSection<Content: View>: View {
     let title: String
     let icon: String
     @ViewBuilder var content: Content
@@ -135,7 +172,7 @@ private struct SetupSection<Content: View>: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(.white.opacity(0.1))
+                    .fill(.white.opacity(0.08))
                     .overlay {
                         RoundedRectangle(cornerRadius: 20, style: .continuous)
                             .stroke(.white.opacity(0.12), lineWidth: 1)
@@ -145,7 +182,7 @@ private struct SetupSection<Content: View>: View {
     }
 }
 
-private struct ThemedStepper: View {
+private struct MafiaStepper: View {
     let label: String
     @Binding var value: Int
     let range: ClosedRange<Int>
@@ -159,7 +196,7 @@ private struct ThemedStepper: View {
                 Text("\(value)")
                     .font(.title2.bold())
                     .monospacedDigit()
-                    .foregroundStyle(CouchTheme.cyan)
+                    .foregroundStyle(CouchTheme.gold)
             }
 
             Spacer()
@@ -182,7 +219,11 @@ private struct ThemedStepper: View {
                 .frame(width: 40, height: 40)
                 .background {
                     Circle()
-                        .fill(enabled ? CouchTheme.accentGradient : LinearGradient(colors: [.gray.opacity(0.3), .gray.opacity(0.2)], startPoint: .top, endPoint: .bottom))
+                        .fill(
+                            enabled
+                                ? CouchTheme.mafiaAccentGradient
+                                : LinearGradient(colors: [.gray.opacity(0.3), .gray.opacity(0.2)], startPoint: .top, endPoint: .bottom)
+                        )
                 }
         }
         .disabled(!enabled)
@@ -190,7 +231,7 @@ private struct ThemedStepper: View {
     }
 }
 
-private struct ThemedTextField: View {
+private struct MafiaTextField: View {
     let placeholder: String
     @Binding var text: String
     let icon: String
@@ -198,19 +239,19 @@ private struct ThemedTextField: View {
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
-                .foregroundStyle(CouchTheme.violet)
+                .foregroundStyle(Color.red.opacity(0.75))
                 .frame(width: 20)
 
             TextField(placeholder, text: $text)
                 .textInputAutocapitalization(.words)
                 .foregroundStyle(.white)
-                .tint(CouchTheme.cyan)
+                .tint(CouchTheme.gold)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
         .background {
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(.white.opacity(0.08))
+                .fill(.white.opacity(0.06))
                 .overlay {
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
                         .stroke(.white.opacity(0.1), lineWidth: 1)
@@ -221,6 +262,6 @@ private struct ThemedTextField: View {
 
 #Preview {
     NavigationStack {
-        SetupView()
+        MafiaSetupView()
     }
 }

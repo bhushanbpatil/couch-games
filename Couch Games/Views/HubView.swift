@@ -37,6 +37,56 @@ struct HubView: View {
                         .padding(.vertical, 8)
                     }
                     .listRowBackground(Color.white.opacity(0.08))
+
+                    NavigationLink {
+                        MafiaSetupView()
+                    } label: {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .fill(CouchTheme.mafiaAccentGradient)
+                                    .frame(width: 56, height: 56)
+                                Text("🕶️")
+                                    .font(.title2)
+                            }
+
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Mafia")
+                                    .font(.title2.bold())
+                                    .foregroundStyle(.white)
+                                Text("Roles · Night · Vote. Find the Mafia.")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.white.opacity(0.65))
+                            }
+                        }
+                        .padding(.vertical, 8)
+                    }
+                    .listRowBackground(Color.white.opacity(0.08))
+
+                    NavigationLink {
+                        ResistanceSetupView()
+                    } label: {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .fill(CouchTheme.resistanceAccentGradient)
+                                    .frame(width: 56, height: 56)
+                                Text("🛡️")
+                                    .font(.title2)
+                            }
+
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Resistance")
+                                    .font(.title2.bold())
+                                    .foregroundStyle(.white)
+                                Text("Missions · Teams · Sabotage. Trust no one.")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.white.opacity(0.65))
+                            }
+                        }
+                        .padding(.vertical, 8)
+                    }
+                    .listRowBackground(Color.white.opacity(0.08))
                 } header: {
                     Text("Party Games")
                         .foregroundStyle(.white.opacity(0.7))
