@@ -50,6 +50,17 @@ struct HubView: View {
         .navigationTitle("Couch Games")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    AppAboutView()
+                } label: {
+                    Image(systemName: "info.circle")
+                        .foregroundStyle(.white.opacity(0.85))
+                }
+                .accessibilityLabel("About and privacy")
+            }
+        }
     }
 
     @ViewBuilder

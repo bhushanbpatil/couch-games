@@ -32,6 +32,8 @@ final class MultipeerRoomService: NSObject {
     private var browser: MCNearbyServiceBrowser?
     private var hostPlayerID = UUID()
     private var peerNameToPlayerID: [String: UUID] = [:]
+    private var joinTargetGame: ConnectedGameKind?
+    private var joinInviteSent = false
 
     var onMessage: ((ConnectedMessage) -> Void)?
 
@@ -65,13 +67,15 @@ final class MultipeerRoomService: NSObject {
         statusText = "Waiting for players to join"
     }
 
-    func joinNearby(displayName: String) {
+    func joinNearby(game: ConnectedGameKind, displayName: String) {
         stop()
         configureDisplayName(displayName)
         isHost = false
-        gameKind = nil
+        joinTargetGame = game
+        gameKind = game
+        joinInviteSent = false
         players = []
-        statusText = "Looking for nearby rooms…"
+        statusText = "Looking for nearby \(game.title) room…"
 
         let session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         session.delegate = self
@@ -138,6 +142,8 @@ final class MultipeerRoomService: NSObject {
         isHost = false
         isConnected = false
         gameKind = nil
+        joinTargetGame = nil
+        joinInviteSent = false
         players = []
         statusText = "Not connected"
         peerNameToPlayerID = [:]
@@ -196,12 +202,15 @@ extension MultipeerRoomService: MCNearbyServiceAdvertiserDelegate {
 extension MultipeerRoomService: MCNearbyServiceBrowserDelegate {
     nonisolated func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
         Task { @MainActor in
-            guard !isHost, let session else { return }
-            if let raw = info?["game"], let kind = ConnectedGameKind(rawValue: raw) {
-                gameKind = kind
-            }
+            guard !isHost, let session, let joinTargetGame else { return }
+            guard !joinInviteSent, session.connectedPeers.isEmpty else { return }
+            guard info?["game"] == joinTargetGame.rawValue else { return }
+
+            joinInviteSent = true
+            gameKind = joinTargetGame
             browser.invitePeer(peerID, to: session, withContext: nil, timeout: 12)
-            statusText = "Joining room…"
+            browser.stopBrowsingForPeers()
+            statusText = "Joining \(joinTargetGame.title) room…"
         }
     }
 

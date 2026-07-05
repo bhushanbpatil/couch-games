@@ -9,5 +9,7 @@
 		<string>_couch-games._tcp</string>
 		<string>_couch-games._udp</string>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

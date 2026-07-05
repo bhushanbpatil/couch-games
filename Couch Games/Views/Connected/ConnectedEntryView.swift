@@ -85,7 +85,7 @@ struct ConnectedEntryView: View {
     }
 
     private func startJoining() {
-        room.joinNearby(displayName: trimmedName)
+        room.joinNearby(game: game, displayName: trimmedName)
         lobbyMode = .join
         navigateToLobby = true
     }
