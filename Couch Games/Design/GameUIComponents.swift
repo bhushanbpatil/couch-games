@@ -11,6 +11,20 @@ enum GameLayout {
     static let actionBottomPadding: CGFloat = 12
 }
 
+struct GameHubIcon: View {
+    let assetName: String
+    var size: CGFloat = 56
+
+    var body: some View {
+        Image(assetName)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: size, height: size)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .shadow(color: .black.opacity(0.25), radius: 6, y: 3)
+    }
+}
+
 struct PinnedActionBar<Content: View>: View {
     @ViewBuilder var content: Content
 

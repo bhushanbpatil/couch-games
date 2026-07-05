@@ -100,6 +100,46 @@ enum CouchTheme {
         )
     }
 
+    static var chameleonGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.06, green: 0.14, blue: 0.10),
+                Color(red: 0.10, green: 0.22, blue: 0.14),
+                Color(red: 0.08, green: 0.16, blue: 0.12)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    static var chameleonAccentGradient: LinearGradient {
+        LinearGradient(
+            colors: [Color(red: 0.28, green: 0.82, blue: 0.42), Color(red: 0.18, green: 0.62, blue: 0.38)],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
+
+    static var headsUpGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.18, green: 0.12, blue: 0.08),
+                Color(red: 0.28, green: 0.16, blue: 0.10),
+                Color(red: 0.20, green: 0.14, blue: 0.12)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    static var headsUpAccentGradient: LinearGradient {
+        LinearGradient(
+            colors: [Color(red: 1.0, green: 0.72, blue: 0.18), Color(red: 0.95, green: 0.42, blue: 0.22)],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
+
     static func accuracyStyle(for error: TimeInterval) -> AccuracyStyle {
         if error < Scoring.perfectThreshold {
             return AccuracyStyle(

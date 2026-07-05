@@ -11,6 +11,8 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
     case resistanceClassic
     case resistanceAvalon
     case fakeArtist
+    case chameleon
+    case headsUp
 
     var id: String { rawValue }
 
@@ -21,6 +23,8 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
         case .resistanceClassic: return "Resistance — Classic"
         case .resistanceAvalon: return "Resistance — Avalon"
         case .fakeArtist: return "Fake Artist"
+        case .chameleon: return "Chameleon"
+        case .headsUp: return "Heads Up"
         }
     }
 
@@ -133,6 +137,52 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
                     "Discuss the drawing, then vote for the Fake Artist.",
                     "If they're caught, they get one guess at the word.",
                     "Wrong accusation = Fake Artist wins."
+                ])
+            ]
+
+        case .chameleon:
+            return [
+                ("Goal", [
+                    "Everyone knows the secret word except one Chameleon.",
+                    "Catch the Chameleon to win. The Chameleon wins by staying hidden — or guessing the word if caught."
+                ]),
+                ("Setup", [
+                    "Pick players and how much the Chameleon knows.",
+                    "Complete Blind — nothing. Category Only — topic, no words. Word Grid — classic 4×4 card.",
+                    "Pass the phone for private reveals."
+                ]),
+                ("Discussion", [
+                    "Take turns saying ONE word related to the secret.",
+                    "Don't be too obvious — the Chameleon is listening.",
+                    "In Complete Blind mode, the category stays hidden on screen during the round."
+                ]),
+                ("Vote & guess", [
+                    "Discuss, then vote for the Chameleon.",
+                    "If they're caught, they pick the secret word from the grid.",
+                    "Wrong accusation = Chameleon wins."
+                ])
+            ]
+
+        case .headsUp:
+            return [
+                ("Goal", [
+                    "Guess as many cards as you can before time runs out.",
+                    "Friends see the word on screen and act it out — you hold the phone on your forehead."
+                ]),
+                ("Setup", [
+                    "Pick one or more decks and a round length.",
+                    "Default controls: volume buttons plus on-screen Pass / Got It.",
+                    "Optional: enter the guesser's name for the score screen."
+                ]),
+                ("Playing", [
+                    "Hold the phone on your forehead with the screen facing your friends.",
+                    "Volume up = got it · Volume down = pass.",
+                    "On-screen buttons work too when Volume + Tap is selected."
+                ]),
+                ("Scoring", [
+                    "Each correct guess and pass is tracked.",
+                    "When the timer hits zero, see your score and pass the phone to the next player.",
+                    "Tap Play Again for a fresh shuffled deck."
                 ])
             ]
         }
