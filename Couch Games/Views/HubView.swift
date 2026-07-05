@@ -72,6 +72,7 @@ struct HubView: View {
         case "resistance": ResistanceSetupView()
         case "chameleon": ChameleonSetupView()
         case "fakeArtist": FakeArtistSetupView()
+        case "bluffBarrel": BluffBarrelSetupView()
         default: EmptyView()
         }
     }

@@ -58,6 +58,51 @@ struct ConnectedChameleonGuessPromptPayload: Codable, Equatable {
     let category: String
 }
 
+struct ConnectedBluffBarrelHandPayload: Codable, Equatable {
+    let cards: [BluffBarrelCard]
+}
+
+struct ConnectedBluffBarrelPlayerSnapshot: Codable, Equatable {
+    let id: UUID
+    let name: String
+    let isAlive: Bool
+    let safeTriggerPulls: Int
+    let handCount: Int
+}
+
+struct ConnectedBluffBarrelPublicPayload: Codable, Equatable {
+    let tableRank: BluffBarrelRank
+    let phaseKey: String
+    let activePlayerID: UUID?
+    let lastPlayPlayerID: UUID?
+    let lastPlayCount: Int
+    let canCallLiar: Bool
+    let mustPlay: Bool
+    let revealedCards: [BluffBarrelCard]?
+    let lied: Bool?
+    let rouletteTargetID: UUID?
+    let players: [ConnectedBluffBarrelPlayerSnapshot]
+    let title: String
+    let script: String
+    let lastRouletteHit: Bool
+    let winnerID: UUID?
+}
+
+struct ConnectedBluffBarrelActionPayload: Codable, Equatable {
+    enum Action: String, Codable {
+        case play
+        case callLiar
+        case pullTrigger
+        case confirmRoundIntro
+        case continueToRoulette
+        case acknowledgeRouletteResult
+    }
+
+    let playerID: UUID
+    let action: Action
+    let cardIDs: [UUID]?
+}
+
 enum ConnectedMessage: Codable {
     case roster([RoomPlayer])
     case startGame(ConnectedGameStartPayload)
@@ -67,12 +112,15 @@ enum ConnectedMessage: Codable {
     case chameleonVotePrompt(ConnectedChameleonVotePromptPayload)
     case chameleonGuessPrompt(ConnectedChameleonGuessPromptPayload)
     case vote(ConnectedVotePayload)
+    case bluffBarrelHand(ConnectedBluffBarrelHandPayload)
+    case bluffBarrelPublic(ConnectedBluffBarrelPublicPayload)
+    case bluffBarrelAction(ConnectedBluffBarrelActionPayload)
     case ack
 
     private enum CodingKeys: String, CodingKey { case type, payload }
 
     private enum MessageType: String, Codable {
-        case roster, startGame, phase, chameleonRole, privateRole, chameleonVotePrompt, chameleonGuessPrompt, vote, ack
+        case roster, startGame, phase, chameleonRole, privateRole, chameleonVotePrompt, chameleonGuessPrompt, vote, bluffBarrelHand, bluffBarrelPublic, bluffBarrelAction, ack
     }
 
     init(from decoder: Decoder) throws {
@@ -95,6 +143,12 @@ enum ConnectedMessage: Codable {
             self = .chameleonGuessPrompt(try container.decode(ConnectedChameleonGuessPromptPayload.self, forKey: .payload))
         case .vote:
             self = .vote(try container.decode(ConnectedVotePayload.self, forKey: .payload))
+        case .bluffBarrelHand:
+            self = .bluffBarrelHand(try container.decode(ConnectedBluffBarrelHandPayload.self, forKey: .payload))
+        case .bluffBarrelPublic:
+            self = .bluffBarrelPublic(try container.decode(ConnectedBluffBarrelPublicPayload.self, forKey: .payload))
+        case .bluffBarrelAction:
+            self = .bluffBarrelAction(try container.decode(ConnectedBluffBarrelActionPayload.self, forKey: .payload))
         case .ack:
             self = .ack
         }
@@ -126,6 +180,15 @@ enum ConnectedMessage: Codable {
             try container.encode(payload, forKey: .payload)
         case .vote(let payload):
             try container.encode(MessageType.vote, forKey: .type)
+            try container.encode(payload, forKey: .payload)
+        case .bluffBarrelHand(let payload):
+            try container.encode(MessageType.bluffBarrelHand, forKey: .type)
+            try container.encode(payload, forKey: .payload)
+        case .bluffBarrelPublic(let payload):
+            try container.encode(MessageType.bluffBarrelPublic, forKey: .type)
+            try container.encode(payload, forKey: .payload)
+        case .bluffBarrelAction(let payload):
+            try container.encode(MessageType.bluffBarrelAction, forKey: .type)
             try container.encode(payload, forKey: .payload)
         case .ack:
             try container.encode(MessageType.ack, forKey: .type)

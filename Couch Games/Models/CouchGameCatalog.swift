@@ -9,6 +9,7 @@ enum ConnectedGameKind: String, Codable, CaseIterable, Identifiable {
     case mafia
     case resistance
     case chameleon
+    case bluffBarrel
 
     var id: String { rawValue }
 
@@ -17,6 +18,7 @@ enum ConnectedGameKind: String, Codable, CaseIterable, Identifiable {
         case .mafia: return GameDisplayNames.villageTraitors
         case .resistance: return GameDisplayNames.secretMissions
         case .chameleon: return GameDisplayNames.wordSpy
+        case .bluffBarrel: return GameDisplayNames.bluffAndBarrel
         }
     }
 
@@ -25,6 +27,7 @@ enum ConnectedGameKind: String, Codable, CaseIterable, Identifiable {
         case .mafia: return "Roles · Night · Vote on your phone."
         case .resistance: return "Missions · Teams · Secret roles."
         case .chameleon: return "Words · Clues · Spot the fake."
+        case .bluffBarrel: return "Cards · Bluff · Pull the trigger."
         }
     }
 
@@ -33,6 +36,7 @@ enum ConnectedGameKind: String, Codable, CaseIterable, Identifiable {
         case .mafia: return "GameMafia"
         case .resistance: return "GameResistance"
         case .chameleon: return "GameChameleon"
+        case .bluffBarrel: return "GameBluffBarrel"
         }
     }
 
@@ -41,6 +45,7 @@ enum ConnectedGameKind: String, Codable, CaseIterable, Identifiable {
         case .mafia: return MafiaSetupConfig.minPlayers
         case .resistance: return ResistanceSetupConfig.minPlayers
         case .chameleon: return ChameleonSetupConfig.minPlayers
+        case .bluffBarrel: return BluffBarrelSetupConfig.minPlayers
         }
     }
 
@@ -49,6 +54,7 @@ enum ConnectedGameKind: String, Codable, CaseIterable, Identifiable {
         case .mafia: return MafiaSetupConfig.maxPlayers
         case .resistance: return ResistanceSetupConfig.maxPlayers
         case .chameleon: return ChameleonSetupConfig.maxPlayers
+        case .bluffBarrel: return BluffBarrelSetupConfig.maxPlayers
         }
     }
 }
@@ -65,6 +71,7 @@ struct PassAndPlayGame: Identifiable {
         PassAndPlayGame(id: "mafia", title: GameDisplayNames.villageTraitors, subtitle: "Roles · Night · Vote. Find the traitors.", iconAsset: "GameMafia"),
         PassAndPlayGame(id: "resistance", title: GameDisplayNames.secretMissions, subtitle: "Missions · Teams · Sabotage. Trust no one.", iconAsset: "GameResistance"),
         PassAndPlayGame(id: "chameleon", title: GameDisplayNames.wordSpy, subtitle: "Words · Clues · Spot the fake.", iconAsset: "GameChameleon"),
-        PassAndPlayGame(id: "fakeArtist", title: GameDisplayNames.sketchImpostor, subtitle: "Draw · Colors · Spot the fake.", iconAsset: "GameFakeArtist")
+        PassAndPlayGame(id: "fakeArtist", title: GameDisplayNames.sketchImpostor, subtitle: "Draw · Colors · Spot the fake.", iconAsset: "GameFakeArtist"),
+        PassAndPlayGame(id: "bluffBarrel", title: GameDisplayNames.bluffAndBarrel, subtitle: "Cards · Bluff · Pull the trigger.", iconAsset: "GameBluffBarrel")
     ]
 }

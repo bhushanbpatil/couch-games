@@ -12,6 +12,7 @@ enum GameDisplayNames {
     static let secretMissions = "Secret Missions"
     static let wordSpy = "Word Spy"
     static let sketchImpostor = "Sketch Impostor"
+    static let bluffAndBarrel = "Bluff & Barrel"
 
     static let traitor = "Traitor"
     static let wordSpyRole = "Word Spy"

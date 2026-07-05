@@ -87,6 +87,16 @@ struct ConnectedLobbyView: View {
             connectedHostDestination
         }
         .navigationDestination(isPresented: $navigateToClientGame) {
+            connectedClientDestination
+        }
+    }
+
+    @ViewBuilder
+    private var connectedClientDestination: some View {
+        switch game {
+        case .bluffBarrel:
+            ConnectedBluffBarrelClientView(room: room)
+        default:
             ConnectedClientGameView(game: game, room: room)
         }
     }
@@ -100,6 +110,8 @@ struct ConnectedLobbyView: View {
             ConnectedResistanceHostView(room: room)
         case .chameleon:
             ConnectedChameleonHostView(room: room)
+        case .bluffBarrel:
+            ConnectedBluffBarrelHostView(room: room)
         }
     }
 

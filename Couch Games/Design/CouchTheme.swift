@@ -140,6 +140,26 @@ enum CouchTheme {
         )
     }
 
+    static var bluffBarrelGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.12, green: 0.08, blue: 0.06),
+                Color(red: 0.24, green: 0.14, blue: 0.08),
+                Color(red: 0.16, green: 0.10, blue: 0.08)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    static var bluffBarrelAccentGradient: LinearGradient {
+        LinearGradient(
+            colors: [Color(red: 0.92, green: 0.62, blue: 0.22), Color(red: 0.72, green: 0.38, blue: 0.18)],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
+
     static func accuracyStyle(for error: TimeInterval) -> AccuracyStyle {
         if error < Scoring.perfectThreshold {
             return AccuracyStyle(

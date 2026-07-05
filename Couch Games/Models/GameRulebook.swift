@@ -13,6 +13,7 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
     case fakeArtist
     case chameleon
     case headsUp
+    case bluffBarrel
 
     var id: String { rawValue }
 
@@ -25,6 +26,7 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
         case .fakeArtist: return GameDisplayNames.sketchImpostor
         case .chameleon: return GameDisplayNames.wordSpy
         case .headsUp: return GameDisplayNames.foreheadGuess
+        case .bluffBarrel: return GameDisplayNames.bluffAndBarrel
         }
     }
 
@@ -183,6 +185,30 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
                     "Each correct guess and pass is tracked.",
                     "When the timer hits zero, see your score and pass the phone to the next player.",
                     "Tap Play Again for a fresh shuffled deck."
+                ])
+            ]
+
+        case .bluffBarrel:
+            return [
+                ("Goal", [
+                    "Be the last player standing.",
+                    "Bluff about your cards — or call someone out when you think they're lying."
+                ]),
+                ("Setup", [
+                    "2–4 players. Each gets 5 cards from a 20-card deck (Kings, Queens, Aces, and Jokers).",
+                    "Each round picks a table rank — Kings, Queens, or Aces.",
+                    "Jokers count as wild for any table rank."
+                ]),
+                ("Playing", [
+                    "On your turn, play 1–3 cards face down and claim they match the table rank.",
+                    "The next player can play cards too — or call Liar!",
+                    "If Liar is called, the played cards are revealed."
+                ]),
+                ("Barrel", [
+                    "If the play was a lie, the liar pulls the trigger.",
+                    "If the call was wrong, the caller pulls the trigger.",
+                    "Six chambers — odds get worse each safe pull. Hit = eliminated.",
+                    "Survivors get a fresh deal; last player standing wins."
                 ])
             ]
         }
