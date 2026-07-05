@@ -67,14 +67,14 @@ final class FakeArtistGameViewModel {
         case .revealDrawing: return "The Drawing"
         case .fakeGuess: return "Final Guess"
         case .gameOver: return "Game Over"
-        default: return "Fake Artist"
+        default: return GameDisplayNames.sketchImpostor
         }
     }
 
     var moderatorScript: String {
         switch phase {
         case .roleReveal:
-            return "Pass the phone. Each player sees the secret word — except one Fake Artist."
+            return "Pass the phone. Each player sees the secret word — except one Impostor."
         case .drawHandoff:
             return "Pass the phone to \(currentDrawer?.name ?? "the next artist")."
         case .drawing:
@@ -82,11 +82,11 @@ final class FakeArtistGameViewModel {
         case .revealDrawing:
             return "Study the drawing. Each color belongs to one player. Who doesn't know the word?"
         case .voteModeChoice:
-            return "How should you vote for the Fake Artist?"
+            return "How should you vote for the Impostor?"
         case .voteCollect:
             return "Pass the phone — \(currentVoter?.name ?? "player") votes privately."
         case .voteGod:
-            return "Moderator — tap who the group thinks is the Fake Artist."
+            return "Moderator — tap who the group thinks is the Impostor."
         case .fakeGuess:
             return "You were caught! Guess the secret word to steal the win."
         case .gameOver:
@@ -99,11 +99,11 @@ final class FakeArtistGameViewModel {
     var outcomeMessage: String {
         switch outcome {
         case .artistsWin:
-            return "The Fake Artist was caught and guessed wrong. Artists win!"
+            return "The Impostor was caught and guessed wrong. Artists win!"
         case .fakeArtistUndetected:
-            return "Wrong person accused. The Fake Artist wins!"
+            return "Wrong person accused. The Impostor wins!"
         case .fakeArtistGuessedWord:
-            return "The Fake Artist guessed the word. They win!"
+            return "The Impostor guessed the word. They win!"
         case .none:
             return ""
         }

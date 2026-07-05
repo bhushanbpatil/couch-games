@@ -19,12 +19,12 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
     var title: String {
         switch self {
         case .timerGuess: return "Timer Guess"
-        case .mafia: return "Mafia"
-        case .resistanceClassic: return "Resistance — Classic"
-        case .resistanceAvalon: return "Resistance — Avalon"
-        case .fakeArtist: return "Fake Artist"
-        case .chameleon: return "Chameleon"
-        case .headsUp: return "Heads Up"
+        case .mafia: return GameDisplayNames.villageTraitors
+        case .resistanceClassic: return "\(GameDisplayNames.secretMissions) — Classic"
+        case .resistanceAvalon: return "\(GameDisplayNames.secretMissions) — Special Roles"
+        case .fakeArtist: return GameDisplayNames.sketchImpostor
+        case .chameleon: return GameDisplayNames.wordSpy
+        case .headsUp: return GameDisplayNames.foreheadGuess
         }
     }
 
@@ -50,17 +50,17 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
         case .mafia:
             return [
                 ("Goal", [
-                    "Town wins by voting out all Mafia.",
-                    "Mafia wins when they equal or outnumber everyone else."
+                    "Town wins by voting out all Traitors.",
+                    "Traitors win when they equal or outnumber everyone else."
                 ]),
                 ("Setup", [
-                    "Pick players and how many Mafia, Police, and Nurses.",
+                    "Pick players and how many Traitors, Police, and Nurses.",
                     "Everyone else is a Villager.",
                     "Pass the phone — each player sees their role alone."
                 ]),
                 ("Night", [
                     "Everyone closes their eyes.",
-                    "Mafia picks one person to eliminate.",
+                    "Traitors pick one person to eliminate.",
                     "Nurse picks someone to save (same person = saved).",
                     "Police picks someone to check (moderator nods yes/no)."
                 ]),
@@ -78,8 +78,8 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
                     "Spy team: sabotage 3 missions."
                 ]),
                 ("Setup", [
-                    "Most players are Resistance; a few are Spies.",
-                    "Spies know each other. Resistance does not know who is who.",
+                    "Most players are Agents; a few are Spies.",
+                    "Spies know each other. Agents do not know who is who.",
                     "Pass the phone for private role reveals."
                 ]),
                 ("Each mission", [
@@ -97,36 +97,36 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
         case .resistanceAvalon:
             return [
                 ("Same as Classic, plus special roles", [
-                    "Use Avalon mode for Merlin, Percival, Assassin, and more.",
+                    "Use Special Roles mode for Oracle, Guardian, Hunter, and more.",
                     "Mission rules and voting are the same as Classic."
                 ]),
                 ("Good roles", [
-                    "Merlin — knows most evil players (not Mordred). Stay hidden.",
-                    "Percival — sees Merlin and Morgana, but not which is which.",
-                    "Loyal Servant — regular good player."
+                    "Oracle — knows most evil players (not the Hidden Spy). Stay hidden.",
+                    "Guardian — sees the Oracle and Trickster, but not which is which.",
+                    "Loyal Agent — regular good player."
                 ]),
                 ("Evil roles", [
-                    "Assassin — if good wins 3 missions, guesses Merlin to steal the win.",
-                    "Morgana — looks like Merlin to Percival.",
-                    "Mordred — hidden from Merlin.",
-                    "Oberon (10 players) — doesn't know evil, evil doesn't know Oberon."
+                    "Hunter — if good wins 3 missions, guesses the Oracle to steal the win.",
+                    "Trickster — looks like the Oracle to the Guardian.",
+                    "Hidden Spy — hidden from the Oracle.",
+                    "Lone Wolf (10 players) — doesn't know evil, evil doesn't know Lone Wolf."
                 ]),
                 ("Winning", [
                     "Evil can win with 3 failed missions.",
-                    "Good can win with 3 successful missions — then Assassin gets one guess.",
-                    "Correct Merlin guess = evil wins anyway."
+                    "Good can win with 3 successful missions — then the Hunter gets one guess.",
+                    "Correct Oracle guess = evil wins anyway."
                 ])
             ]
 
         case .fakeArtist:
             return [
                 ("Goal", [
-                    "Most players know the secret word. One Fake Artist does not.",
-                    "Artists win by catching the Fake Artist. The Fake Artist wins by staying hidden — or guessing the word if caught."
+                    "Most players know the secret word. One Impostor does not.",
+                    "Artists win by catching the Impostor. The Impostor wins by staying hidden — or guessing the word if caught."
                 ]),
                 ("Setup", [
                     "Each player gets a unique pencil color.",
-                    "Pass the phone so everyone sees the word — except the Fake Artist, who sees \"?\"."
+                    "Pass the phone so everyone sees the word — except the Impostor, who sees \"?\"."
                 ]),
                 ("Drawing (2 rounds)", [
                     "In turn, each player adds one line to the shared drawing.",
@@ -134,32 +134,32 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
                     "Tap End Turn when you're finished. No letters or numbers."
                 ]),
                 ("Vote & guess", [
-                    "Discuss the drawing, then vote for the Fake Artist.",
+                    "Discuss the drawing, then vote for the Impostor.",
                     "If they're caught, they get one guess at the word.",
-                    "Wrong accusation = Fake Artist wins."
+                    "Wrong accusation = Impostor wins."
                 ])
             ]
 
         case .chameleon:
             return [
                 ("Goal", [
-                    "Everyone knows the secret word except one Chameleon.",
-                    "Catch the Chameleon to win. The Chameleon wins by staying hidden — or guessing the word if caught."
+                    "Everyone knows the secret word except one Word Spy.",
+                    "Catch the Word Spy to win. The Word Spy wins by staying hidden — or guessing the word if caught."
                 ]),
                 ("Setup", [
-                    "Pick players and how much the Chameleon knows.",
+                    "Pick players and how much the Word Spy knows.",
                     "Complete Blind — nothing. Category Only — topic, no words. Word Grid — classic 4×4 card.",
                     "Pass the phone for private reveals."
                 ]),
                 ("Discussion", [
                     "Take turns saying ONE word related to the secret.",
-                    "Don't be too obvious — the Chameleon is listening.",
+                    "Don't be too obvious — the Word Spy is listening.",
                     "In Complete Blind mode, the category stays hidden on screen during the round."
                 ]),
                 ("Vote & guess", [
-                    "Discuss, then vote for the Chameleon.",
+                    "Discuss, then vote for the Word Spy.",
                     "If they're caught, they pick the secret word from the grid.",
-                    "Wrong accusation = Chameleon wins."
+                    "Wrong accusation = Word Spy wins."
                 ])
             ]
 

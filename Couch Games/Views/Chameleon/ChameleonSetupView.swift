@@ -49,7 +49,7 @@ struct ChameleonSetupView: View {
                             .foregroundStyle(.white.opacity(0.65))
                     }
 
-                    ChameleonSetupSection(title: "Chameleon knows", icon: "eye.trianglebadge.exclamationmark.fill") {
+                    ChameleonSetupSection(title: "Word Spy knows", icon: "eye.trianglebadge.exclamationmark.fill") {
                         VStack(spacing: 10) {
                             ForEach(ChameleonIntelMode.allCases) { mode in
                                 Button {
@@ -83,9 +83,9 @@ struct ChameleonSetupView: View {
 
                     ChameleonSetupSection(title: "How it works", icon: "text.bubble.fill") {
                         VStack(alignment: .leading, spacing: 8) {
-                            Label("Everyone sees the secret word except one Chameleon", systemImage: "eye.slash")
+                            Label("Everyone sees the secret word except one Word Spy", systemImage: "eye.slash")
                             Label("Take turns saying one related word", systemImage: "text.bubble")
-                            Label("Vote out the Chameleon — or bluff your way out", systemImage: "hand.raised")
+                            Label("Vote out the Word Spy — or bluff your way out", systemImage: "hand.raised")
                         }
                         .font(.footnote)
                         .foregroundStyle(.white.opacity(0.65))
@@ -109,7 +109,7 @@ struct ChameleonSetupView: View {
             }
         }
         .foregroundStyle(.white)
-        .navigationTitle("Chameleon")
+        .navigationTitle(GameDisplayNames.wordSpy)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {

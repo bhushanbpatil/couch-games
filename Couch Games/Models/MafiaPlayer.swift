@@ -37,10 +37,10 @@ struct MafiaSetupConfig: Equatable {
         guard totalPlayers >= Self.minPlayers, totalPlayers <= Self.maxPlayers else {
             return "Use \(Self.minPlayers)–\(Self.maxPlayers) players."
         }
-        guard mafiaCount >= 1 else { return "You need at least 1 Mafia." }
+        guard mafiaCount >= 1 else { return "You need at least 1 Traitor." }
         guard villagerCount >= 1 else { return "Too many special roles — need at least 1 Villager." }
         guard mafiaCount < (totalPlayers - mafiaCount) else {
-            return "Mafia cannot equal or outnumber everyone else at start."
+            return "Traitors cannot equal or outnumber everyone else at start."
         }
         return nil
     }

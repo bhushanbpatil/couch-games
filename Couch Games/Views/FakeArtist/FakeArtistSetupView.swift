@@ -82,7 +82,7 @@ struct FakeArtistSetupView: View {
             }
         }
         .foregroundStyle(.white)
-        .navigationTitle("Fake Artist")
+        .navigationTitle(GameDisplayNames.sketchImpostor)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {

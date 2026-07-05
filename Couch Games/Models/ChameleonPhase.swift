@@ -38,9 +38,9 @@ enum ChameleonIntelMode: String, CaseIterable, Identifiable, Codable {
 
     var subtitle: String {
         switch self {
-        case .completeBlind: return "Chameleon knows nothing — pure bluff"
-        case .categoryOnly: return "Chameleon sees the topic, not the words"
-        case .wordGrid: return "Classic — Chameleon sees all 16 words"
+        case .completeBlind: return "Word Spy knows nothing — pure bluff"
+        case .categoryOnly: return "Word Spy sees the topic, not the words"
+        case .wordGrid: return "Classic — Word Spy sees all 16 words"
         }
     }
 }

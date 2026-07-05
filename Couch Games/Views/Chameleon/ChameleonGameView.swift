@@ -139,7 +139,7 @@ struct ChameleonGameView: View {
     private var chameleonRoleContent: some View {
         Text("🦎")
             .font(.system(size: 56))
-        Text("Chameleon")
+        Text(GameDisplayNames.wordSpyRole)
             .font(.largeTitle.bold())
             .foregroundStyle(CouchTheme.chameleonAccentGradient)
 
@@ -187,7 +187,7 @@ struct ChameleonGameView: View {
                         Text("Category hidden")
                             .font(.caption.weight(.bold))
                             .foregroundStyle(.white.opacity(0.55))
-                        Text("Chameleon is flying blind")
+                        Text("Word Spy is flying blind")
                             .font(.title3.bold())
                             .foregroundStyle(.white.opacity(0.75))
                     }
@@ -228,7 +228,7 @@ struct ChameleonGameView: View {
                 PlayerBadge(name: voter.name)
             }
 
-            Text("Who is the Chameleon?")
+            Text("Who is the Word Spy?")
                 .font(.headline)
 
             playerGrid(selectedID: $voteSelection) { id in
@@ -283,7 +283,7 @@ struct ChameleonGameView: View {
             )
 
             if let chameleon = viewModel.chameleon {
-                Text("Chameleon: \(chameleon.name)")
+                Text("Word Spy: \(chameleon.name)")
                     .font(.headline)
             }
         }

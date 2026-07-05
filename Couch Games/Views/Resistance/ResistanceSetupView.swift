@@ -79,7 +79,7 @@ struct ResistanceSetupView: View {
                                     .foregroundStyle(Color.red.opacity(0.85))
                             }
                             HStack {
-                                Text("Resistance")
+                                Text("Agents")
                                     .font(.subheadline)
                                     .foregroundStyle(.white.opacity(0.65))
                                 Spacer()
@@ -114,7 +114,7 @@ struct ResistanceSetupView: View {
             }
         }
         .foregroundStyle(.white)
-        .navigationTitle("Resistance")
+        .navigationTitle(GameDisplayNames.secretMissions)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {

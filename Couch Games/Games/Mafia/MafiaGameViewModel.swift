@@ -76,7 +76,7 @@ final class MafiaGameViewModel {
         case .dawn, .dayDiscussion, .voteModeChoice, .dayVoteCollect, .dayDefense, .dayRevote, .dayFinalVote, .eliminationReveal:
             return "Day \(roundNumber)"
         case .gameOver: return "Game Over"
-        default: return "Mafia"
+        default: return GameDisplayNames.villageTraitors
         }
     }
 
@@ -88,10 +88,10 @@ final class MafiaGameViewModel {
             return "Everyone close your eyes."
         case .nightMafia:
             return aliveMafiaCount > 1
-                ? "Mafia — open your eyes. Agree on ONE person to eliminate."
-                : "Mafia — open your eyes. Choose someone to eliminate."
+                ? "Traitors — open your eyes. Agree on ONE person to eliminate."
+                : "Traitors — open your eyes. Choose someone to eliminate."
         case .nightNurse:
-            return "Mafia — close your eyes.\nNurse — open your eyes. Choose someone to save."
+            return "Traitors — close your eyes.\nNurse — open your eyes. Choose someone to save."
         case .nightPolice:
             return "Nurse — close your eyes.\nPolice — open your eyes. Choose someone to investigate."
         case .nightPoliceResult:
@@ -111,7 +111,7 @@ final class MafiaGameViewModel {
         case .eliminationReveal:
             return "The town has spoken."
         case .gameOver:
-            return winner == .mafia ? "Mafia take the town." : "The town survives!"
+            return winner == .mafia ? "Traitors take the town." : "The town survives!"
         default:
             return ""
         }

@@ -100,7 +100,7 @@ final class ResistanceGameViewModel {
     var navigationTitle: String {
         switch phase {
         case .roleReveal: return "Roles"
-        case .assassination: return "Assassination"
+        case .assassination: return "Final Guess"
         case .gameOver: return "Game Over"
         default: return "Mission \(missionNumber)"
         }
@@ -140,12 +140,12 @@ final class ResistanceGameViewModel {
             return lastMissionSucceeded ? "Mission succeeded!" : "Mission failed!"
         case .assassination:
             if let assassin = assassinPlayer {
-                return "Good won 3 missions. Pass the phone to \(assassin.name) — pick who you think is Merlin."
+                return "Good won 3 missions. Pass the phone to \(assassin.name) — pick who you think is the Oracle."
             }
-            return "Assassin — pick who you think is Merlin."
+            return "Hunter — pick who you think is the Oracle."
         case .gameOver:
             if spiesWinViaAssassination {
-                return "The Assassin found Merlin. Spies steal the win!"
+                return "The Hunter found the Oracle. Spies steal the win!"
             }
             return winner == .resistance ? "The good team wins!" : "The Spies win!"
         default:

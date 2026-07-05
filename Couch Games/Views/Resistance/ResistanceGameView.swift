@@ -72,7 +72,7 @@ struct ResistanceGameView: View {
         GlassCard {
             VStack(spacing: 14) {
                 HStack {
-                    scoreColumn(title: "Resistance", value: viewModel.resistanceWins, color: CouchTheme.cyan)
+                    scoreColumn(title: "Agents", value: viewModel.resistanceWins, color: CouchTheme.cyan)
                     Text("–")
                         .font(.title.bold())
                         .foregroundStyle(.white.opacity(0.35))
@@ -345,7 +345,7 @@ struct ResistanceGameView: View {
             }
 
             if !viewModel.lastTeamApproved && viewModel.consecutiveRejections >= ResistanceMissionRules.maxRejections - 1 {
-                Text("One more rejection and the Resistance wins!")
+                Text("One more rejection and the Agents win!")
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(.orange)
                     .multilineTextAlignment(.center)
@@ -421,14 +421,14 @@ struct ResistanceGameView: View {
         VStack(spacing: 20) {
             if let assassin = viewModel.assassinPlayer {
                 VStack(spacing: 8) {
-                    Text("🗡️ Assassin")
+                    Text("🗡️ Hunter")
                         .font(.caption.weight(.bold))
                         .foregroundStyle(.white.opacity(0.55))
                     PlayerBadge(name: assassin.name)
                 }
             }
 
-            Text("Who is Merlin?")
+            Text("Who is the Oracle?")
                 .font(.title2.bold())
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
@@ -467,7 +467,7 @@ struct ResistanceGameView: View {
                     .font(.largeTitle.bold())
                     .foregroundStyle(Color.red.opacity(0.9))
                 if let target = viewModel.assassinationTarget {
-                    Text("\(target.name) was Merlin.")
+                    Text("\(target.name) was the Oracle.")
                         .font(.headline)
                         .foregroundStyle(.white.opacity(0.7))
                 }
@@ -562,7 +562,7 @@ struct ResistanceGameView: View {
 
             case .assassination:
                 if let assassinationSelection {
-                    Button("Confirm Assassination") {
+                    Button("Confirm Guess") {
                         viewModel.confirmAssassination(targetID: assassinationSelection)
                     }
                     .buttonStyle(CouchPrimaryButton(gradient: CouchTheme.mafiaAccentGradient))
@@ -589,7 +589,7 @@ struct ResistanceGameView: View {
         if viewModel.gameMode == .avalon,
            viewModel.resistanceWins >= ResistanceMissionRules.winsNeeded,
            viewModel.spyWins < ResistanceMissionRules.winsNeeded {
-            return "Assassination"
+            return "Final Guess"
         }
         return "Next Mission"
     }

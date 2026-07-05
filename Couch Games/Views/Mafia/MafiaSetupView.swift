@@ -54,7 +54,7 @@ struct MafiaSetupView: View {
                     }
 
                     MafiaSetupSection(title: "Roles", icon: "theatermasks.fill") {
-                        MafiaStepper(label: "Mafia", value: $mafiaCount, range: 1...maxMafia)
+                        MafiaStepper(label: GameDisplayNames.traitor, value: $mafiaCount, range: 1...maxMafia)
                             .onChange(of: mafiaCount) { _, _ in clampRoles() }
                         MafiaStepper(label: "Police", value: $policeCount, range: 0...maxSpecialRoles)
                             .onChange(of: policeCount) { _, _ in clampRoles() }
@@ -97,7 +97,7 @@ struct MafiaSetupView: View {
             }
         }
         .foregroundStyle(.white)
-        .navigationTitle("Mafia")
+        .navigationTitle(GameDisplayNames.villageTraitors)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {

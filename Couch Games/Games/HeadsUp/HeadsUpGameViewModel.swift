@@ -32,9 +32,9 @@ final class HeadsUpGameViewModel {
     var navigationTitle: String {
         switch phase {
         case .ready: return "Get Ready"
-        case .playing: return "Heads Up!"
+        case .playing: return "\(GameDisplayNames.foreheadGuess)!"
         case .roundSummary: return "Round Over"
-        default: return "Heads Up"
+        default: return GameDisplayNames.foreheadGuess
         }
     }
 

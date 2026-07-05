@@ -76,7 +76,7 @@ struct ConnectedClientGameView: View {
             VStack(spacing: 12) {
                 if role.isChameleon {
                     Text("🦎").font(.system(size: 48))
-                    Text("Chameleon").font(.title.bold())
+                    Text(GameDisplayNames.wordSpyRole).font(.title.bold())
                 } else {
                     Text(role.category.uppercased()).font(.caption.bold()).foregroundStyle(.white.opacity(0.55))
                     Text(role.secretWord ?? "?").font(.largeTitle.bold()).foregroundStyle(CouchTheme.gold)

@@ -148,7 +148,7 @@ struct FakeArtistGameView: View {
                             Text("?")
                                 .font(.system(size: 72, weight: .bold, design: .rounded))
                                 .foregroundStyle(.white.opacity(0.5))
-                            Text("Fake Artist")
+                            Text(GameDisplayNames.sketchImpostorRole)
                                 .font(.largeTitle.bold())
                                 .foregroundStyle(CouchTheme.fakeArtistAccentGradient)
                             Text("You don't know the word. Blend in when it's your turn to draw.")
@@ -272,10 +272,10 @@ struct FakeArtistGameView: View {
 
             if viewModel.phase == .voteCollect, let voter = viewModel.currentVoter {
                 PlayerBadge(name: voter.name)
-                Text("Who is the Fake Artist?")
+                Text("Who is the Impostor?")
                     .font(.headline)
             } else {
-                Text("Who is the Fake Artist?")
+                Text("Who is the Impostor?")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -349,7 +349,7 @@ struct FakeArtistGameView: View {
             if let fake = viewModel.fakeArtist {
                 HStack(spacing: 8) {
                     Circle().fill(viewModel.ink(for: fake).color).frame(width: 12, height: 12)
-                    Text("Fake Artist: \(fake.name)")
+                    Text("Impostor: \(fake.name)")
                         .font(.headline)
                 }
             }

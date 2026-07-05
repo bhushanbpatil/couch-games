@@ -139,15 +139,15 @@ enum ConnectedGameSync {
         case .mafia:
             let partners = viewModel.players.filter { $0.role == .mafia && $0.id != player.id }.map(\.name)
             if partners.isEmpty {
-                return ["You are Mafia.", "Choose someone to eliminate at night."]
+                return ["You are a Traitor.", "Choose someone to eliminate at night."]
             }
-            return ["You are Mafia.", "Your partners: \(partners.joined(separator: ", "))"]
+            return ["You are a Traitor.", "Your partners: \(partners.joined(separator: ", "))"]
         case .police:
             return ["You are Police.", "Investigate one player each night."]
         case .nurse:
             return ["You are the Nurse.", "Choose someone to save each night."]
         case .villager:
-            return ["You are a Villager.", "Find and vote out the Mafia."]
+            return ["You are a Villager.", "Find and vote out the Traitors."]
         }
     }
 
@@ -194,7 +194,7 @@ enum ConnectedGameSync {
                 lines.append("Spies: \(spies.joined(separator: ", "))")
             }
         } else {
-            lines.append("Help the Resistance win three missions.")
+            lines.append("Help the Agents win three missions.")
         }
         return lines
     }

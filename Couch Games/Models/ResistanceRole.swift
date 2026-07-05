@@ -28,16 +28,16 @@ enum ResistanceRole: String, CaseIterable, Codable {
 
     var displayName: String {
         switch self {
-        case .resistance: return "Resistance"
+        case .resistance: return GameDisplayNames.loyalAgent
         case .spy: return "Spy"
-        case .loyalServant: return "Loyal Servant"
-        case .merlin: return "Merlin"
-        case .percival: return "Percival"
-        case .minion: return "Minion"
-        case .assassin: return "Assassin"
-        case .morgana: return "Morgana"
-        case .mordred: return "Mordred"
-        case .oberon: return "Oberon"
+        case .loyalServant: return "Loyal Agent"
+        case .merlin: return "Oracle"
+        case .percival: return "Guardian"
+        case .minion: return "Spy Ally"
+        case .assassin: return "Hunter"
+        case .morgana: return "Trickster"
+        case .mordred: return "Hidden Spy"
+        case .oberon: return "Lone Wolf"
         }
     }
 
@@ -63,17 +63,17 @@ enum ResistanceRole: String, CaseIterable, Codable {
         case .loyalServant:
             return "Help the good team win 3 missions. You must play Success."
         case .merlin:
-            return "You know who most of the evil players are. Stay hidden — the Assassin is hunting you."
+            return "You know who most of the evil players are. Stay hidden — the Hunter is hunting you."
         case .percival:
-            return "You see two players — one is Merlin. Protect the real Merlin."
+            return "You see two players — one is the Oracle. Protect the real Oracle."
         case .minion:
             return "Sabotage 3 missions. You know your evil teammates."
         case .assassin:
-            return "Sabotage missions. If good wins 3 missions, you get one guess at Merlin."
+            return "Sabotage missions. If good wins 3 missions, you get one guess at the Oracle."
         case .morgana:
-            return "You appear as Merlin to Percival. Trick the good team."
+            return "You appear as the Oracle to the Guardian. Trick the good team."
         case .mordred:
-            return "You are hidden from Merlin. Coordinate with your team."
+            return "You are hidden from the Oracle. Coordinate with your team."
         case .oberon:
             return "You don't know your teammates and they don't know you."
         }
@@ -89,14 +89,14 @@ enum ResistanceGameMode: String, CaseIterable, Identifiable {
     var displayName: String {
         switch self {
         case .classic: return "Classic"
-        case .avalon: return "Avalon"
+        case .avalon: return "Special Roles"
         }
     }
 
     var subtitle: String {
         switch self {
-        case .classic: return "Resistance vs Spies"
-        case .avalon: return "Merlin, Percival & the Assassin"
+        case .classic: return "Agents vs Spies"
+        case .avalon: return "Oracle, Guardian & the Hunter"
         }
     }
 }

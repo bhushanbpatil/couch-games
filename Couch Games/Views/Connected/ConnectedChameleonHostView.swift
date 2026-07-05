@@ -74,7 +74,7 @@ struct ConnectedChameleonHostView: View {
             }
         }
         .foregroundStyle(.white)
-        .navigationTitle("Chameleon")
+        .navigationTitle(GameDisplayNames.wordSpy)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

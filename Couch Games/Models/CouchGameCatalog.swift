@@ -14,9 +14,9 @@ enum ConnectedGameKind: String, Codable, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .mafia: return "Mafia"
-        case .resistance: return "Resistance"
-        case .chameleon: return "Chameleon"
+        case .mafia: return GameDisplayNames.villageTraitors
+        case .resistance: return GameDisplayNames.secretMissions
+        case .chameleon: return GameDisplayNames.wordSpy
         }
     }
 
@@ -60,11 +60,11 @@ struct PassAndPlayGame: Identifiable {
     let iconAsset: String
 
     static let all: [PassAndPlayGame] = [
-        PassAndPlayGame(id: "headsUp", title: "Heads Up", subtitle: "Forehead · Act · Volume to score.", iconAsset: "GameHeadsUp"),
+        PassAndPlayGame(id: "headsUp", title: GameDisplayNames.foreheadGuess, subtitle: "Forehead · Act · Volume to score.", iconAsset: "GameHeadsUp"),
         PassAndPlayGame(id: "timerGuess", title: "Timer Guess", subtitle: "Memorize · Count · Stop. Closest wins.", iconAsset: "GameTimerGuess"),
-        PassAndPlayGame(id: "mafia", title: "Mafia", subtitle: "Roles · Night · Vote. Find the Mafia.", iconAsset: "GameMafia"),
-        PassAndPlayGame(id: "resistance", title: "Resistance", subtitle: "Missions · Teams · Sabotage. Trust no one.", iconAsset: "GameResistance"),
-        PassAndPlayGame(id: "chameleon", title: "Chameleon", subtitle: "Words · Clues · Spot the fake.", iconAsset: "GameChameleon"),
-        PassAndPlayGame(id: "fakeArtist", title: "Fake Artist", subtitle: "Draw · Colors · Spot the fake.", iconAsset: "GameFakeArtist")
+        PassAndPlayGame(id: "mafia", title: GameDisplayNames.villageTraitors, subtitle: "Roles · Night · Vote. Find the traitors.", iconAsset: "GameMafia"),
+        PassAndPlayGame(id: "resistance", title: GameDisplayNames.secretMissions, subtitle: "Missions · Teams · Sabotage. Trust no one.", iconAsset: "GameResistance"),
+        PassAndPlayGame(id: "chameleon", title: GameDisplayNames.wordSpy, subtitle: "Words · Clues · Spot the fake.", iconAsset: "GameChameleon"),
+        PassAndPlayGame(id: "fakeArtist", title: GameDisplayNames.sketchImpostor, subtitle: "Draw · Colors · Spot the fake.", iconAsset: "GameFakeArtist")
     ]
 }

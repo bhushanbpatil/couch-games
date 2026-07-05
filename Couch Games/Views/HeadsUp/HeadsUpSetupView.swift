@@ -106,7 +106,7 @@ struct HeadsUpSetupView: View {
             }
         }
         .foregroundStyle(.white)
-        .navigationTitle("Heads Up")
+        .navigationTitle(GameDisplayNames.foreheadGuess)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {

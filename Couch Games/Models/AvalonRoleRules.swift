@@ -45,24 +45,24 @@ enum ResistanceRoleIntel {
             return RoleRevealIntel(
                 title: "Evil players you know",
                 names: evil.sorted(),
-                footnote: "Mordred is hidden from you."
+                footnote: "The Hidden Spy is hidden from you."
             )
 
         case .percival:
-            let merlin = players.first { $0.role == .merlin }?.name
-            let morgana = players.first { $0.role == .morgana }?.name
-            if let morgana, let merlin {
+            let oracle = players.first { $0.role == .merlin }?.name
+            let trickster = players.first { $0.role == .morgana }?.name
+            if let trickster, let oracle {
                 return RoleRevealIntel(
-                    title: "One of these is Merlin",
-                    names: [merlin, morgana].shuffled(),
+                    title: "One of these is the Oracle",
+                    names: [oracle, trickster].shuffled(),
                     footnote: "You don't know which is which."
                 )
             }
-            if let merlin, let decoyID = percivalDecoyID,
+            if let oracle, let decoyID = percivalDecoyID,
                let decoy = players.first(where: { $0.id == decoyID })?.name {
                 return RoleRevealIntel(
-                    title: "One of these is Merlin",
-                    names: [merlin, decoy].shuffled(),
+                    title: "One of these is the Oracle",
+                    names: [oracle, decoy].shuffled(),
                     footnote: "You don't know which is which."
                 )
             }
@@ -74,7 +74,7 @@ enum ResistanceRoleIntel {
             return RoleRevealIntel(
                 title: player.role == .spy ? "Your fellow Spies" : "Your evil teammates",
                 names: teammates,
-                footnote: player.role == .oberon ? nil : "Oberon is not shown."
+                footnote: player.role == .oberon ? nil : "The Lone Wolf is not shown."
             )
 
         case .oberon:

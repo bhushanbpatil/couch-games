@@ -33,7 +33,7 @@ struct ConnectedMafiaHostView: View {
                             .foregroundStyle(.white.opacity(0.65))
                         Text("\(room.players.count) players")
                             .font(.headline)
-                        Button("Start Mafia") {
+                        Button("Start \(GameDisplayNames.villageTraitors)") {
                             ConnectedGameSync.startMafia(viewModel, room: room)
                             started = true
                         }
@@ -44,7 +44,7 @@ struct ConnectedMafiaHostView: View {
                 .foregroundStyle(.white)
             }
         }
-        .navigationTitle("Mafia")
+        .navigationTitle(GameDisplayNames.villageTraitors)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

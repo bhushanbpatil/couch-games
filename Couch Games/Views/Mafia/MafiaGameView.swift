@@ -72,7 +72,7 @@ struct MafiaGameView: View {
             nightIntroContent
         case .nightMafia:
             nightActionContent(
-                title: "Who does the Mafia eliminate?",
+                title: "Who do the Traitors eliminate?",
                 players: viewModel.alivePlayers.filter { $0.role != .mafia },
                 selection: $selectedPlayerID,
                 onSelect: viewModel.selectNightKill
@@ -209,7 +209,7 @@ struct MafiaGameView: View {
                             .foregroundStyle(viewModel.lastPoliceWasMafia ? Color.green : Color.red.opacity(0.85))
 
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(viewModel.lastPoliceWasMafia ? "Yes — Mafia" : "No — Not Mafia")
+                            Text(viewModel.lastPoliceWasMafia ? "Yes — Traitor" : "No — Not a Traitor")
                                 .font(.title3.bold())
                             Text("Show the Police privately. Nod in real life too.")
                                 .font(.footnote)
@@ -359,7 +359,7 @@ struct MafiaGameView: View {
             Text(viewModel.winner == .mafia ? "🕶️" : "🏠")
                 .font(.system(size: 72))
 
-            Text(viewModel.winner == .mafia ? "Mafia Win!" : "Town Wins!")
+            Text(viewModel.winner == .mafia ? "Traitors Win!" : "Town Wins!")
                 .font(.largeTitle.bold())
                 .foregroundStyle(viewModel.winner == .mafia ? Color.red.opacity(0.9) : CouchTheme.gold)
 

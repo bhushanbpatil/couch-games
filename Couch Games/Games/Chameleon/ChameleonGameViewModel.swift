@@ -67,28 +67,28 @@ final class ChameleonGameViewModel {
         case .discussion: return "Discussion"
         case .chameleonGuess: return "Final Guess"
         case .gameOver: return "Game Over"
-        default: return "Chameleon"
+        default: return GameDisplayNames.wordSpy
         }
     }
 
     var moderatorScript: String {
         switch phase {
         case .roleReveal:
-            return "Pass the phone. Everyone sees the secret word — except one Chameleon."
+            return "Pass the phone. Everyone sees the secret word — except one Word Spy."
         case .discussion:
             if showsCategoryDuringGame {
                 return "Say ONE word related to the secret. Don't make it too obvious."
             }
             return "Say ONE word based on what others say. Don't give yourself away."
         case .voteModeChoice:
-            return "How should you vote for the Chameleon?"
+            return "How should you vote for the Word Spy?"
         case .voteCollect:
             if isConnectedHost {
                 return "Waiting for \(currentVoter?.name ?? "player") to vote on their phone."
             }
             return "Pass the phone — \(currentVoter?.name ?? "player") votes privately."
         case .voteGod:
-            return "Moderator — tap who the group thinks is the Chameleon."
+            return "Moderator — tap who the group thinks is the Word Spy."
         case .chameleonGuess:
             return "You were caught! Pick the secret word from the grid to steal the win."
         case .gameOver:
@@ -101,11 +101,11 @@ final class ChameleonGameViewModel {
     var outcomeMessage: String {
         switch outcome {
         case .innocentsWin:
-            return "The Chameleon was caught and guessed wrong. Everyone else wins!"
+            return "The Word Spy was caught and guessed wrong. Everyone else wins!"
         case .chameleonUndetected:
-            return "Wrong person accused. The Chameleon wins!"
+            return "Wrong person accused. The Word Spy wins!"
         case .chameleonGuessedWord:
-            return "The Chameleon guessed the word. They win!"
+            return "The Word Spy guessed the word. They win!"
         case .none:
             return ""
         }

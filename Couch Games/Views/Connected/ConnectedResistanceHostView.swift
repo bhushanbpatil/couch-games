@@ -33,7 +33,7 @@ struct ConnectedResistanceHostView: View {
                             .foregroundStyle(.white.opacity(0.65))
                         Text("\(room.players.count) players")
                             .font(.headline)
-                        Button("Start Resistance") {
+                        Button("Start \(GameDisplayNames.secretMissions)") {
                             ConnectedGameSync.startResistance(viewModel, room: room)
                             started = true
                         }
@@ -44,7 +44,7 @@ struct ConnectedResistanceHostView: View {
                 .foregroundStyle(.white)
             }
         }
-        .navigationTitle("Resistance")
+        .navigationTitle(GameDisplayNames.secretMissions)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
