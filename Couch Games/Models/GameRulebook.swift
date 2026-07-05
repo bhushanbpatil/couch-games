@@ -10,6 +10,7 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
     case mafia
     case resistanceClassic
     case resistanceAvalon
+    case fakeArtist
 
     var id: String { rawValue }
 
@@ -19,6 +20,7 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
         case .mafia: return "Mafia"
         case .resistanceClassic: return "Resistance — Classic"
         case .resistanceAvalon: return "Resistance — Avalon"
+        case .fakeArtist: return "Fake Artist"
         }
     }
 
@@ -109,6 +111,28 @@ enum CouchGameRulebook: String, Identifiable, CaseIterable {
                     "Evil can win with 3 failed missions.",
                     "Good can win with 3 successful missions — then Assassin gets one guess.",
                     "Correct Merlin guess = evil wins anyway."
+                ])
+            ]
+
+        case .fakeArtist:
+            return [
+                ("Goal", [
+                    "Most players know the secret word. One Fake Artist does not.",
+                    "Artists win by catching the Fake Artist. The Fake Artist wins by staying hidden — or guessing the word if caught."
+                ]),
+                ("Setup", [
+                    "Each player gets a unique pencil color.",
+                    "Pass the phone so everyone sees the word — except the Fake Artist, who sees \"?\"."
+                ]),
+                ("Drawing (2 rounds)", [
+                    "In turn, each player adds one line to the shared drawing.",
+                    "Your color shows who drew what.",
+                    "Tap End Turn when you're finished. No letters or numbers."
+                ]),
+                ("Vote & guess", [
+                    "Discuss the drawing, then vote for the Fake Artist.",
+                    "If they're caught, they get one guess at the word.",
+                    "Wrong accusation = Fake Artist wins."
                 ])
             ]
         }

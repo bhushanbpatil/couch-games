@@ -80,6 +80,26 @@ enum CouchTheme {
         )
     }
 
+    static var fakeArtistGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.14, green: 0.10, blue: 0.20),
+                Color(red: 0.24, green: 0.14, blue: 0.22),
+                Color(red: 0.18, green: 0.16, blue: 0.26)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    static var fakeArtistAccentGradient: LinearGradient {
+        LinearGradient(
+            colors: [Color(red: 0.95, green: 0.55, blue: 0.28), Color(red: 0.88, green: 0.32, blue: 0.52)],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
+
     static func accuracyStyle(for error: TimeInterval) -> AccuracyStyle {
         if error < Scoring.perfectThreshold {
             return AccuracyStyle(

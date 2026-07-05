@@ -87,6 +87,31 @@ struct HubView: View {
                         .padding(.vertical, 8)
                     }
                     .listRowBackground(Color.white.opacity(0.08))
+
+                    NavigationLink {
+                        FakeArtistSetupView()
+                    } label: {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .fill(CouchTheme.fakeArtistAccentGradient)
+                                    .frame(width: 56, height: 56)
+                                Text("🎨")
+                                    .font(.title2)
+                            }
+
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Fake Artist")
+                                    .font(.title2.bold())
+                                    .foregroundStyle(.white)
+                                Text("Draw · Colors · Spot the fake.")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.white.opacity(0.65))
+                            }
+                        }
+                        .padding(.vertical, 8)
+                    }
+                    .listRowBackground(Color.white.opacity(0.08))
                 } header: {
                     Text("Party Games")
                         .foregroundStyle(.white.opacity(0.7))
