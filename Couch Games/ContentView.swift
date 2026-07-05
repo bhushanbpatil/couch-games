@@ -2,20 +2,14 @@
 //  ContentView.swift
 //  Couch Games
 //
-//  Created by Bhushan Patil on 04/07/26.
-//
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            HubView()
         }
-        .padding()
     }
 }
 
